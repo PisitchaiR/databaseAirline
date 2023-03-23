@@ -1,0 +1,132 @@
+// This is your Prisma schema file, // learn more about it in the docs: https://pris.ly/d/prisma-schema 
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String        @id @default(cuid())
+  email       String        @unique
+  password    String
+  role        Role          @default(admin)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  reservation Reservation[]
+}
+
+enum Role {
+  admin
+  user
+  superAdmin
+}
+
+model Coupon {
+  id          String        @id @default(cuid())
+  name        String
+  discount    Int
+  expired     DateTime
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Reservation Reservation[]
+}
+
+model Reservation {
+  id        String   @id @default(cuid())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String
+  phone     String
+  date      DateTime
+  idCoupon  String?
+  Coupon    Coupon?  @relation(fields: [idCoupon], references: [id])
+  idUser    String
+  User      User     @relation(fields: [idUser], references: [id])
+  flightId  String
+  Flight    Flight   @relation(fields: [flightId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Flight {
+  id            String        @id @default(cuid())
+  type          flightType
+  price         Float
+  departureDate DateTime      @map("departure_date")
+  arrivalDate   DateTime      @map("arrival_date")
+  fromAirportId String        @map("from_airport_id")
+  toAirportId   String        @map("to_airport_id")
+  airlineId     String?
+  planeId       String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Reservation   Reservation[]
+  FromAirport   AirPort       @relation("FromAirport", fields: [fromAirportId], references: [id])
+  ToAirport     AirPort       @relation("ToAirport", fields: [toAirportId], references: [id])
+  Airline       Airline?      @relation(fields: [airlineId], references: [id])
+  Plane         Plane?        @relation(fields: [planeId], references: [id])
+}
+
+enum flightType {
+  oneWay
+  twoWay
+}
+
+model AirPort {
+  id            String             @id @default(cuid())
+  nameTh        String             @map("name_th")
+  nameEg        String             @map("name_eg")
+  fromAirportId Flight[]           @relation("FromAirport")
+  toAirportId   Flight[]           @relation("ToAirport")
+  airline       AirlineInAirport[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@map("Air_Port")
+}
+
+model Plane {
+  id        String      @id @default(cuid())
+  name      String
+  airlineId String?     @map("airline_id")
+  status    planeStatus @default(available)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  flight    Flight[]
+  Airline   Airline?    @relation(fields: [airlineId], references: [id])
+}
+
+enum planeStatus {
+  available
+  unavailable
+}
+
+model Airline {
+  id        String             @id @default(cuid())
+  name      String
+  phone     String
+  date      DateTime
+  plane     Plane[]
+  flight    Flight[]
+  airport   AirlineInAirport[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+//airline in airport 
+model AirlineInAirport {
+  id        String   @id @default(cuid())
+  nameTh    String   @map("name_th")
+  nameEg    String   @map("name_eg")
+  airPortId String?  @map("air_port_id")
+  airlineId String?  @map("airline_id")
+  AirPort   AirPort? @relation(fields: [airPortId], references: [id])
+  Airline   Airline? @relation(fields: [airlineId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("Airline_In_Airport")
+}
