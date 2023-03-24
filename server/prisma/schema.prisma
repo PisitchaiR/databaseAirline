@@ -26,7 +26,7 @@ enum Role {
 
 model Coupon {
   id          String        @id @default(cuid())
-  name        String
+  name        String        @unique
   discount    Int
   expired     DateTime
   createdAt   DateTime      @default(now())
@@ -53,13 +53,15 @@ model Reservation {
 
 model Flight {
   id            String        @id @default(cuid())
-  type          flightType
+  name          String        @unique
   price         Float
+  type          flightType
+  seat          Int
   departureDate DateTime      @map("departure_date")
   arrivalDate   DateTime      @map("arrival_date")
   fromAirportId String        @map("from_airport_id")
   toAirportId   String        @map("to_airport_id")
-  airlineId     String?
+  airlineId     String?        
   planeId       String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -77,8 +79,8 @@ enum flightType {
 
 model AirPort {
   id            String             @id @default(cuid())
-  nameTh        String             @map("name_th")
-  nameEg        String             @map("name_eg")
+  nameTh        String             @unique @map("name_th")
+  nameEn        String             @unique @map("name_eg")
   fromAirportId Flight[]           @relation("FromAirport")
   toAirportId   Flight[]           @relation("ToAirport")
   airline       AirlineInAirport[]
@@ -90,13 +92,13 @@ model AirPort {
 
 model Plane {
   id        String      @id @default(cuid())
-  name      String
+  name      String      @unique
   airlineId String?     @map("airline_id")
   status    planeStatus @default(available)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
   flight    Flight[]
   Airline   Airline?    @relation(fields: [airlineId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 enum planeStatus {
@@ -106,9 +108,9 @@ enum planeStatus {
 
 model Airline {
   id        String             @id @default(cuid())
-  name      String
+  nameTh    String             @unique @map("name_th")
+  nameEn    String             @unique @map("name_eg")
   phone     String
-  date      DateTime
   plane     Plane[]
   flight    Flight[]
   airport   AirlineInAirport[]
@@ -119,8 +121,6 @@ model Airline {
 //airline in airport 
 model AirlineInAirport {
   id        String   @id @default(cuid())
-  nameTh    String   @map("name_th")
-  nameEg    String   @map("name_eg")
   airPortId String?  @map("air_port_id")
   airlineId String?  @map("airline_id")
   AirPort   AirPort? @relation(fields: [airPortId], references: [id])
