@@ -12,16 +12,15 @@ model User {
   id          String        @id @default(cuid())
   email       String        @unique
   password    String
-  role        Role          @default(admin)
+  role        Role          @default(customer)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   reservation Reservation[]
 }
 
 enum Role {
-  admin
-  user
-  superAdmin
+  customer
+  personnel
 }
 
 model Coupon {
@@ -61,13 +60,13 @@ model Flight {
   arrivalDate   DateTime      @map("arrival_date")
   fromAirportId String        @map("from_airport_id")
   toAirportId   String        @map("to_airport_id")
-  airlineId     String?        
+  airlineId     String?
   planeId       String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   Reservation   Reservation[]
-  FromAirport   AirPort       @relation("FromAirport", fields: [fromAirportId], references: [id])
-  ToAirport     AirPort       @relation("ToAirport", fields: [toAirportId], references: [id])
+  FromAirport   Airport       @relation("FromAirport", fields: [fromAirportId], references: [id])
+  ToAirport     Airport       @relation("ToAirport", fields: [toAirportId], references: [id])
   Airline       Airline?      @relation(fields: [airlineId], references: [id])
   Plane         Plane?        @relation(fields: [planeId], references: [id])
 }
@@ -77,15 +76,26 @@ enum flightType {
   twoWay
 }
 
-model AirPort {
+model Countries {
+  code      String    @id
+  nameTh    String    @unique @map("name_th")
+  nameEn    String    @unique @map("name_eg")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  airport   Airport[]
+}
+
+model Airport {
   id            String             @id @default(cuid())
   nameTh        String             @unique @map("name_th")
   nameEn        String             @unique @map("name_eg")
+  countriesId   String?
   fromAirportId Flight[]           @relation("FromAirport")
   toAirportId   Flight[]           @relation("ToAirport")
   airline       AirlineInAirport[]
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
+  Countries     Countries?         @relation(fields: [countriesId], references: [code])
 
   @@map("Air_Port")
 }
@@ -123,7 +133,7 @@ model AirlineInAirport {
   id        String   @id @default(cuid())
   airPortId String?  @map("air_port_id")
   airlineId String?  @map("airline_id")
-  AirPort   AirPort? @relation(fields: [airPortId], references: [id])
+  AirPort   Airport? @relation(fields: [airPortId], references: [id])
   Airline   Airline? @relation(fields: [airlineId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

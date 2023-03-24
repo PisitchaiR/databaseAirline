@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+import * as bcrypt from 'bcrypt';
+import * as countries from './countries.json';
 
 async function main() {
   // upsert user have a role user
@@ -7,12 +9,29 @@ async function main() {
     where: { email: 'user@gmail.com' },
     update: {
       email: 'user@gmail.com',
-      password: 'password',
+      password: bcrypt.hashSync('password', 10),
     },
     create: {
       email: 'user@gmail.com',
-      password: 'password',
+      password: bcrypt.hashSync('password', 10),
     },
+  });
+
+  // create country
+  countries.map(async (country) => {
+    await prisma.countries.upsert({
+      where: { code: country.code },
+      update: {
+        nameTh: country.nameTh,
+        nameEn: country.nameEn,
+        code: country.code,
+      },
+      create: {
+        nameTh: country.nameTh,
+        nameEn: country.nameEn,
+        code: country.code,
+      },
+    });
   });
 
   // upsert user have a role admin
@@ -20,42 +39,34 @@ async function main() {
     where: { email: 'admin@gmail.com' },
     update: {
       email: 'admin@gmail.com',
-      password: 'password',
-      role: 'admin',
+      password: bcrypt.hashSync('password', 10),
+      role: 'personnel',
     },
     create: {
       email: 'admin@gmail.com',
-      password: 'password',
-      role: 'admin',
+      password: bcrypt.hashSync('password', 10),
+      role: 'personnel',
     },
   });
 
-  // upsert user have a role superAdmin
-  await prisma.user.upsert({
-    where: { email: 'super@gmail.com' },
-    update: {
-      email: 'super@gmail.com',
-      password: 'password',
-      role: 'superAdmin',
-    },
-    create: {
-      email: 'super@gmail.com',
-      password: 'password',
-      role: 'superAdmin',
-    },
-  });
+  console.log(countries[Math.floor(Math.random() * countries.length)].code);
 
   // create ariport and airline
   for (let i = 0; i < 9; i++) {
-    const airport = await prisma.airPort.upsert({
+    const airport = await prisma.airport.upsert({
       where: { nameEn: `airport-${i}` },
       update: {
         nameTh: `สนามบิน-${i}`,
         nameEn: `airport-${i}`,
+        // random country code
+        countriesId:
+          countries[Math.floor(Math.random() * countries.length)].code,
       },
       create: {
         nameTh: `สนามบิน-${i}`,
         nameEn: `airport-${i}`,
+        countriesId:
+          countries[Math.floor(Math.random() * countries.length)].code,
       },
     });
     const airline = await prisma.airline.upsert({
@@ -77,6 +88,14 @@ async function main() {
         airlineId: airline.id,
       },
     });
+
+    const plane = await prisma.plane.create({
+      data: {
+        name: `plane-${i}`,
+        airlineId: airline.id,
+      },
+    });
+
     await prisma.flight.create({
       data: {
         name: `flight-${i}`,
@@ -88,26 +107,10 @@ async function main() {
         fromAirportId: airport.id,
         toAirportId: airport.id,
         airlineId: airline.id,
-      },
-    });
-  }
-
-  // create plane
-  const airline = await prisma.airline.findMany();
-  airline.map(async (airline, index) => {
-    const plane = await prisma.plane.create({
-      data: {
-        name: `plane-${index}`,
-        airlineId: airline.id,
-      },
-    });
-    await prisma.flight.update({
-      where: { airlineId: airline.id },
-      data: {
         planeId: plane.id,
       },
     });
-  });
+  }
 
   // create coupon
   for (let i = 0; i < 5; i++) {

@@ -1,0 +1,27 @@
+[
+  {
+    "nameTh": "ไทย",
+    "nameEn": "Thailand",
+    "code": "TH"
+  },
+  {
+    "nameTh": "อังกฤษ",
+    "nameEn": "United Kingdom",
+    "code": "UK"
+  },
+  {
+    "nameTh": "สหรัฐอเมริกา",
+    "nameEn": "United States",
+    "code": "US"
+  },
+  {
+    "nameTh": "ญี่ปุ่น",
+    "nameEn": "Japan",
+    "code": "JP"
+  },
+  {
+    "nameTh": "เกาหลีใต้",
+    "nameEn": "South Korea",
+    "code": "KR"
+  }
+]
