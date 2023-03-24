@@ -49,8 +49,6 @@ async function main() {
     },
   });
 
-  console.log(countries[Math.floor(Math.random() * countries.length)].code);
-
   // create ariport and airline
   for (let i = 0; i < 9; i++) {
     const airport = await prisma.airport.upsert({
@@ -82,26 +80,52 @@ async function main() {
         phone: '1234567890',
       },
     });
-    await prisma.airlineInAirport.create({
-      data: {
+
+    await prisma.airlineInAirport.upsert({
+      where: {
+        id: `${airline.id}-${airport.id}`,
+      },
+      update: {
+        id: `${airline.id}-${airport.id}`,
+        airPortId: airport.id,
+        airlineId: airline.id,
+      },
+      create: {
+        id: `${airline.id}-${airport.id}`,
         airPortId: airport.id,
         airlineId: airline.id,
       },
     });
 
-    const plane = await prisma.plane.create({
-      data: {
+    const plane = await prisma.plane.upsert({
+      where: { name: `plane-${i}` },
+      update: {
+        name: `plane-${i}`,
+        airlineId: airline.id,
+      },
+      create: {
         name: `plane-${i}`,
         airlineId: airline.id,
       },
     });
 
-    await prisma.flight.create({
-      data: {
+    const flight = await prisma.flight.upsert({
+      where: { name: `flight-${i}` },
+      update: {
         name: `flight-${i}`,
         price: 1000,
         type: Math.random() > 0.5 ? 'oneWay' : 'twoWay',
-        seat: 100,
+        departureDate: new Date(),
+        arrivalDate: new Date(),
+        fromAirportId: airport.id,
+        toAirportId: airport.id,
+        airlineId: airline.id,
+        planeId: plane.id,
+      },
+      create: {
+        name: `flight-${i}`,
+        price: 1000,
+        type: Math.random() > 0.5 ? 'oneWay' : 'twoWay',
         departureDate: new Date(),
         arrivalDate: new Date(),
         fromAirportId: airport.id,
@@ -110,12 +134,33 @@ async function main() {
         planeId: plane.id,
       },
     });
+
+    //create seat
+    for (let i = 0; i < 12; i++) {
+      await prisma.seat.upsert({
+        where: { seatId: `seat-A${i}` },
+        update: {
+          seatId: `seat-A${i}`,
+          flightId: flight.id,
+        },
+        create: {
+          seatId: `seat-A${i}`,
+          flightId: flight.id,
+        },
+      });
+    }
   }
 
   // create coupon
   for (let i = 0; i < 5; i++) {
-    await prisma.coupon.create({
-      data: {
+    await prisma.coupon.upsert({
+      where: { name: `coupon-${i}` },
+      update: {
+        name: `coupon-${i}`,
+        discount: 10,
+        expired: new Date(),
+      },
+      create: {
         name: `coupon-${i}`,
         discount: 10,
         expired: new Date(),
