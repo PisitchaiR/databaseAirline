@@ -16,7 +16,8 @@ model User {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   reservation Reservation[] //reservation of user
-  userCoupon userCoupon[] //coupon of user
+  userCoupon  userCoupon[] //coupon of user
+  airline     Airline? //airline of user
 }
 
 enum Role {
@@ -52,7 +53,7 @@ model Reservation {
   email     String
   phone     String
   seatId    String
-  Seat      Seat?    @relation(fields: [seatId], references: [seatId])
+  Seat      Seat?    @relation(fields: [seatId], references: [id])
   date      DateTime
   idCoupon  String?
   Coupon    Coupon?  @relation(fields: [idCoupon], references: [id])
@@ -65,12 +66,22 @@ model Reservation {
 }
 
 model Seat {
-  seatId      String        @id
-  flightId    String
-  Reservation Reservation[]
-  Flight      Flight        @relation(fields: [flightId], references: [id])
+  id          String        @id @default(cuid())
+  name        String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  Reservation Reservation[]
+  PlaneSeat   PlaneSeat[]
+}
+
+model PlaneSeat {
+  id        String   @id @default(cuid())
+  planeId   String   @map("plane_id")
+  seatId    String   @map("seat_id")
+  Plane     Plane    @relation(fields: [planeId], references: [id])
+  Seat      Seat     @relation(fields: [seatId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Flight {
@@ -87,7 +98,6 @@ model Flight {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   Reservation   Reservation[]
-  Seat          Seat[]
   FromAirport   Airport       @relation("FromAirport", fields: [fromAirportId], references: [id])
   ToAirport     Airport       @relation("ToAirport", fields: [toAirportId], references: [id])
   Airline       Airline?      @relation(fields: [airlineId], references: [id])
@@ -132,6 +142,7 @@ model Plane {
   Airline   Airline?    @relation(fields: [airlineId], references: [id])
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  PlaneSeat PlaneSeat[]
 }
 
 enum planeStatus {
@@ -140,13 +151,16 @@ enum planeStatus {
 }
 
 model Airline {
-  id        String             @id @default(cuid())
-  nameTh    String             @unique @map("name_th")
-  nameEn    String             @unique @map("name_eg")
-  phone     String
+  id     String  @id @default(cuid())
+  nameTh String  @unique @map("name_th")
+  nameEn String  @unique @map("name_eg")
+  userId String? @unique
+  phone  String
+
   plane     Plane[]
   flight    Flight[]
   airport   AirlineInAirport[]
+  User      User?              @relation(fields: [userId], references: [id])
   createdAt DateTime           @default(now())
   updatedAt DateTime           @updatedAt
 }

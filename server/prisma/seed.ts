@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 import * as bcrypt from 'bcrypt';
 import * as countries from './countries.json';
+import * as airport from './airport.json';
 
 async function main() {
   // upsert user have a role user
@@ -34,37 +35,34 @@ async function main() {
     });
   });
 
-  // upsert user have a role admin
-  await prisma.user.upsert({
-    where: { email: 'admin@gmail.com' },
-    update: {
-      email: 'admin@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-      role: 'personnel',
-    },
-    create: {
-      email: 'admin@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-      role: 'personnel',
-    },
-  });
-
   // create ariport and airline
   for (let i = 0; i < 9; i++) {
+    // upsert user have a role admin
+    const admin = await prisma.user.upsert({
+      where: { email: `admin${i}@gmail.com` },
+      update: {
+        email: `admin${i}@gmail.com`,
+        password: bcrypt.hashSync('password', 10),
+        role: 'personnel',
+      },
+      create: {
+        email: `admin${i}@gmail.com`,
+        password: bcrypt.hashSync('password', 10),
+        role: 'personnel',
+      },
+    });
     const airport = await prisma.airport.upsert({
       where: { nameEn: `airport-${i}` },
       update: {
         nameTh: `สนามบิน-${i}`,
         nameEn: `airport-${i}`,
         // random country code
-        countriesId:
-          countries[Math.floor(Math.random() * countries.length)].code,
+        countriesId: 'TH',
       },
       create: {
         nameTh: `สนามบิน-${i}`,
         nameEn: `airport-${i}`,
-        countriesId:
-          countries[Math.floor(Math.random() * countries.length)].code,
+        countriesId: 'TH',
       },
     });
     const airline = await prisma.airline.upsert({
@@ -73,11 +71,13 @@ async function main() {
         nameTh: `สายการบิน-${i}`,
         nameEn: `airline-${i}`,
         phone: '1234567890',
+        userId: admin.id,
       },
       create: {
         nameTh: `สายการบิน-${i}`,
         nameEn: `airline-${i}`,
         phone: '1234567890',
+        userId: admin.id,
       },
     });
 
@@ -109,7 +109,7 @@ async function main() {
       },
     });
 
-    const flight = await prisma.flight.upsert({
+    await prisma.flight.upsert({
       where: { name: `flight-${i}` },
       update: {
         name: `flight-${i}`,
@@ -137,15 +137,15 @@ async function main() {
 
     //create seat
     for (let i = 0; i < 12; i++) {
-      await prisma.seat.upsert({
-        where: { seatId: `seat-A${i}` },
-        update: {
-          seatId: `seat-A${i}`,
-          flightId: flight.id,
+      const seat = await prisma.seat.create({
+        data: {
+          name: `seat-A${i}`,
         },
-        create: {
-          seatId: `seat-A${i}`,
-          flightId: flight.id,
+      });
+      await prisma.planeSeat.create({
+        data: {
+          seatId: seat.id,
+          planeId: plane.id,
         },
       });
     }
