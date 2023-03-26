@@ -14,7 +14,7 @@ model User {
   password    String
   role        Role          @default(customer)
   reservation Reservation[] //reservation of user
-  userCoupon  userCoupon[] //coupon of user
+  userCoupon  collectCoupon[] //coupon of user
   airline     Airline? //airline of user
 }
 
@@ -23,7 +23,7 @@ enum Role {
   personnel
 }
 
-model userCoupon {
+model collectCoupon {
   id        String   @id @default(cuid())
   idUser    String
   idCoupon  String
@@ -31,6 +31,8 @@ model userCoupon {
   Coupon    Coupon   @relation(fields: [idCoupon], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("Collect_Coupon")
 }
 
 model Coupon {
@@ -39,7 +41,7 @@ model Coupon {
   discount    Int
   expired     DateTime
   Reservation Reservation[] // reservation use coupon
-  userCoupon  userCoupon[] // user have coupon
+  userCoupon  collectCoupon[] // user have coupon
 }
 
 model Reservation {
@@ -73,6 +75,8 @@ model PlaneSeat {
   seatId    String   @map("seat_id")
   Plane     Plane    @relation(fields: [planeId], references: [id])
   Seat      Seat     @relation(fields: [seatId], references: [id])
+
+  @@map("Plane_Seat")
 }
 
 model Flight {
