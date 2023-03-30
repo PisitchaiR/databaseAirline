@@ -1,38 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-import * as bcrypt from 'bcrypt';
+import { hash, verify } from 'argon2';
 import * as countries from './countries.json';
 import * as airport from './airport.json';
 
 async function main() {
-  // upsert user have a role user
-  await prisma.user.upsert({
-    where: { email: 'user@gmail.com' },
-    update: {
-      email: 'user@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-    },
-    create: {
-      email: 'user@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-    },
-  });
-
-  //upsert user have a role admin
-  await prisma.user.upsert({
-    where: { email: 'admin@gmail.com' },
-    update: {
-      email: 'admin@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-      role: 'personnel',
-    },
-    create: {
-      email: 'admin@gmail.com',
-      password: bcrypt.hashSync('password', 10),
-      role: 'personnel',
-    },
-  });
-
   // create country
   countries.map(async (country) => {
     await prisma.countries.upsert({
@@ -48,6 +20,33 @@ async function main() {
         code: country.code,
       },
     });
+  });
+  // upsert user have a role user
+  await prisma.user.upsert({
+    where: { email: 'user@gmail.com' },
+    update: {
+      email: 'user@gmail.com',
+      password: await hash('password'),
+    },
+    create: {
+      email: 'user@gmail.com',
+      password: await hash('password'),
+    },
+  });
+
+  //upsert user have a role admin
+  await prisma.user.upsert({
+    where: { email: 'admin@gmail.com' },
+    update: {
+      email: 'admin@gmail.com',
+      password: await hash('password'),
+      role: 'personnel',
+    },
+    create: {
+      email: 'admin@gmail.com',
+      password: await hash('password'),
+      role: 'personnel',
+    },
   });
 
   // create airport
@@ -66,6 +65,22 @@ async function main() {
       },
     });
   });
+
+  for (let i = 0; i < 10; i++) {
+    await prisma.coupon.upsert({
+      where: { name: `CODE${i}` },
+      update: {
+        name: `CODE${i}`,
+        discount: 10,
+        expiredAt: new Date('2023-03-31'),
+      },
+      create: {
+        name: `CODE${i}`,
+        discount: 10,
+        expiredAt: new Date('2023-03-31'),
+      },
+    });
+  }
 }
 
 main()

@@ -26,13 +26,14 @@ enum Role {
 }
 
 model CollectCoupon {
-  id        String   @id @default(cuid())
-  idUser    String
-  idCoupon  String
-  User      User     @relation(fields: [idUser], references: [id])
-  Coupon    Coupon   @relation(fields: [idCoupon], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String       @id @default(cuid())
+  userId      String
+  couponId    String
+  User        User         @relation(fields: [userId], references: [id])
+  Coupon      Coupon       @relation(fields: [couponId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  Reservation Reservation?
 
   @@map("Collect_Coupon")
 }
@@ -41,22 +42,21 @@ model Coupon {
   id            String          @id @default(cuid())
   name          String          @unique
   discount      Int
-  expired       DateTime
-  CollectCoupon CollectCoupon[]
-  Reservation   Reservation[]
+  expiredAt     DateTime        @map("expired_at")
+  CollectCoupon CollectCoupon[] //รายการคูปองที่เก็บไว้
 }
 
 model Reservation {
   id         String  @id @default(cuid())
-  idUser     String
-  idFlight   String
+  userId     String
+  flightId   String
   seat       Int
-  couponId   String?
+  couponId   String? @unique
   totalPrice Float   @map("total_price")
 
-  User   User    @relation(fields: [idUser], references: [id])
-  Flight Flight  @relation(fields: [idFlight], references: [id])
-  Coupon Coupon? @relation(fields: [couponId], references: [id])
+  User   User           @relation(fields: [userId], references: [id])
+  Flight Flight         @relation(fields: [flightId], references: [id])
+  Coupon CollectCoupon? @relation(fields: [couponId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,7 +71,7 @@ model Flight {
   arriveDate      DateTime      @map("arrive_date") //วันที่ถึง
   departAirportId String //สนามบินต้นทาง 
   arriveAirportId String //สนามบินปลายทาง
-  price           Int
+  price           Float
   seat            Int
   planeId         String
   Plane           Plane         @relation(fields: [planeId], references: [id])
@@ -82,15 +82,13 @@ model Flight {
 
 model Airline {
   id               String             @id @default(cuid())
-  userId           String             @unique
-  nameTh           String
-  nameEn           String
-  phone            String
-  User             User?              @relation(fields: [userId], references: [id])
+  ownerId          String             @unique
+  nameTh           String             @unique
+  nameEn           String             @unique
+  phone            String             @unique
+  User             User?              @relation(fields: [ownerId], references: [id])
   Plane            Plane[] //รายการเครื่องบิน
   AirlineInAirport AirlineInAirport[] //รายการสนามบิน
-
-  @@unique([nameTh, nameEn, phone])
 }
 
 model Plane {

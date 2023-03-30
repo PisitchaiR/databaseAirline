@@ -1,89 +1,50 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  FlightDto,
-  CreateFlight,
-  UpdateFlight,
-  SearchFlight,
-} from './flight.dto';
+
 import { PrismaService } from 'src/prisma/prisma.service';
+import { FlightDto, SearchFlight } from './flight.dto';
 
 @Injectable()
 export class FlightService {
   constructor(private prisma: PrismaService) {}
 
-  async findFlightById(id: string): Promise<FlightDto> {
-    return this.prisma.flight.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
-
-  async findFlightByAirlineId(id: string): Promise<FlightDto[]> {
-    return this.prisma.flight.findMany({
-      where: {
-        airlineId: id,
-      },
-    });
-  }
-
-  async findByName(name: string): Promise<FlightDto> {
-    return this.prisma.flight.findUnique({
-      where: {
-        name,
-      },
-    });
-  }
-
   async findBySearch(data: SearchFlight): Promise<FlightDto[]> {
-    if (data.type == undefined)
-      throw new BadRequestException('Type is required');
-
-    return this.prisma.flight.findMany({
+    const endOfDay = new Date(data.departDate);
+    endOfDay.setHours(23, 59, 59, 999);
+    return await this.prisma.flight.findMany({
       where: {
-        OR: [
+        AND: [
+          { departAirportId: data.departAirportId },
+          { arriveAirportId: data.arriveAirportId },
           {
-            departureDate: {
-              gte: data.departureDate,
-            },
-          },
-          {
-            arrivalDate: {
-              lte: data.arrivalDate,
+            departDate: {
+              gte: data.departDate,
+              lt: endOfDay,
             },
           },
         ],
-
-        fromAirportId: data.fromAirportId,
-        toAirportId: data.toAirportId,
-        type: data.type,
       },
     });
   }
 
-  async createFlight(data: CreateFlight): Promise<FlightDto> {
-    const findFlight = await this.findByName(data.name);
-    console.log(findFlight);
+  async findById(id: string): Promise<FlightDto> {
+    return await this.prisma.flight.findUnique({
+      where: { id },
+    });
+  }
+
+  async findBynumber(number: string): Promise<FlightDto> {
+    return await this.prisma.flight.findUnique({
+      where: {
+        flightNo: number,
+      },
+    });
+  }
+
+  async create(data: FlightDto): Promise<FlightDto> {
+    const findFlight = await this.findBynumber(data.flightNo);
     if (findFlight) throw new BadRequestException('Flight already exists');
-    return this.prisma.flight.create({
+    return await this.prisma.flight.create({
       data,
-    });
-  }
-
-  async updateFlight(id: string, data: UpdateFlight): Promise<FlightDto> {
-    return this.prisma.flight.update({
-      where: {
-        id,
-      },
-      data,
-    });
-  }
-
-  async deleteFlight(id: string): Promise<FlightDto> {
-    return this.prisma.flight.delete({
-      where: {
-        id,
-      },
     });
   }
 }

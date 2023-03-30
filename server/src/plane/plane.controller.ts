@@ -19,18 +19,26 @@ export class PlaneController {
     return await this.planeService.findByAirlineId(id);
   }
 
+  @Get('/')
+  async getAllPlanes(): Promise<PlaneDto[]> {
+    return await this.planeService.getAllPlanes();
+  }
+
   @Post('/')
-  async create(@Body() data: PlaneDto) {
+  async create(@Body() data: PlaneDto): Promise<PlaneDto> {
     return await this.planeService.create(data);
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: string, @Body() data: PlaneDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() data: PlaneDto,
+  ): Promise<PlaneDto> {
     return await this.planeService.update(id, data);
   }
 
   @Delete('/:id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string): Promise<PlaneDto> {
     return await this.planeService.delete(id);
   }
 }

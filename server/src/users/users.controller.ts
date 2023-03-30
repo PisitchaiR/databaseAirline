@@ -8,13 +8,11 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() data: LoginUserDto) {
-    const user = await this.usersService.login(data);
-    return { user };
+    return await this.usersService.login(data);
   }
 
   @Post('register')
   async register(@Body() data: LoginUserDto) {
-    const user = await this.usersService.createUser(data);
-    return { user };
+    return await this.usersService.createUser(data);
   }
 }

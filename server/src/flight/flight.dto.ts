@@ -1,33 +1,17 @@
-import { flightType } from '@prisma/client';
-
 export class FlightDto {
+  id: string;
+  flightNo: string;
+  departDate: Date;
+  arriveDate: Date;
+  departAirportId: string;
+  arriveAirportId: string;
   price: number;
-  name: string;
-  type: flightType;
-  departureDate?: Date | string;
-  arrivalDate?: Date | string;
-  fromAirportId?: string;
-  toAirportId?: string;
-  airlineId?: string;
-  planeId?: string;
-}
-
-export class CreateFlight extends FlightDto {
-  fromAirportId: string;
-  toAirportId: string;
-  airlineId: string;
+  seat: number;
   planeId: string;
 }
 
-export class UpdateFlight extends FlightDto {
-  fromAirportId?: string;
-  toAirportId?: string;
-  airlineId?: string;
-  planeId?: string;
-}
-
-export class SearchFlight extends FlightDto {
-  fromAirportId: string;
-  toAirportId: string;
-  type: flightType;
+export class SearchFlight {
+  departDate: Date;
+  departAirportId: string;
+  arriveAirportId: string;
 }

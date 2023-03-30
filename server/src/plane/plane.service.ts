@@ -18,6 +18,10 @@ export class PlaneService {
     });
   }
 
+  async getAllPlanes(): Promise<PlaneDto[]> {
+    return await this.prisma.plane.findMany();
+  }
+
   async findByAirlineId(airlineId: string): Promise<PlaneDto[]> {
     return await this.prisma.plane.findMany({
       where: { airlineId },

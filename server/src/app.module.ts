@@ -5,9 +5,11 @@ import { AirlinesModule } from './airlines/airlines.module';
 import { PlaneModule } from './plane/plane.module';
 import { FlightModule } from './flight/flight.module';
 import { AirportModule } from './airport/airport.module';
+import { CouponModule } from './coupon/coupon.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
-  imports: [UsersModule, AirlinesModule, PlaneModule, FlightModule, AirportModule],
+  imports: [UsersModule, AirlinesModule, PlaneModule, FlightModule, AirportModule, CouponModule, ReservationModule],
   controllers: [],
   providers: [PrismaService],
 })

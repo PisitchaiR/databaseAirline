@@ -1,18 +1,18 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { FlightService } from './flight.service';
-import { SearchFlight, CreateFlight, FlightDto } from './flight.dto';
+import { FlightDto } from './flight.dto';
 
 @Controller('flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
 
-  @Get('/search')
-  async searchFlight(@Body() data: SearchFlight): Promise<FlightDto[]> {
-    return this.flightService.findBySearch(data);
+  @Post()
+  async create(@Body() data: FlightDto) {
+    return await this.flightService.create(data);
   }
 
-  @Post('/')
-  async createFlight(@Body() data: CreateFlight): Promise<FlightDto> {
-    return this.flightService.createFlight(data);
+  @Get('/search')
+  async findBySearch(@Body() data: any) {
+    return await this.flightService.findBySearch(data);
   }
 }

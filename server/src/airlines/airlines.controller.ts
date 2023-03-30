@@ -9,6 +9,6 @@ export class AirlinesController {
   @Post('/')
   async create(@Body() data: CreateAirline) {
     const airline = await this.airlineService.create(data);
-    return { airline };
+    return airline;
   }
 }
