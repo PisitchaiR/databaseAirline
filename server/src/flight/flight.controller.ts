@@ -11,7 +11,7 @@ export class FlightController {
     return await this.flightService.create(data);
   }
 
-  @Get('/search')
+  @Post('/search')
   async findBySearch(@Body() data: any) {
     return await this.flightService.findBySearch(data);
   }
