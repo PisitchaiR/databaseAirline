@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginUserDto, UserDto } from './user.dto';
@@ -20,6 +24,27 @@ export class UsersService {
     });
   }
 
+  async getReservation(id: string): Promise<any> {
+    return await this.prisma.reservation.findMany({
+      where: { userId: id },
+    });
+  }
+
+  async getCoupon(id: string): Promise<any> {
+    const coupon = await this.prisma.collectCoupon.findMany({
+      where: { userId: id },
+      select: {
+        id: true,
+        Coupon: true,
+      },
+    });
+    const result = [];
+    coupon.map((item) => {
+      result.push({ ...item.Coupon, collectCouponId: item.id });
+    });
+    return result;
+  }
+
   async login(data: LoginUserDto): Promise<any> {
     const findUser = await this.findByEmail(data.email);
     if (!findUser) throw new BadRequestException('Email not found');
@@ -34,7 +59,7 @@ export class UsersService {
 
   async createUser(data: Pick<UserDto, 'email' | 'password'>): Promise<any> {
     const findUser = await this.findByEmail(data.email);
-    if (findUser) throw new BadRequestException('Email already exists');
+    if (findUser) throw new ConflictException('Email already exists');
 
     const hashedPassword = await hash(data.password);
     const user = await this.prisma.user.create({

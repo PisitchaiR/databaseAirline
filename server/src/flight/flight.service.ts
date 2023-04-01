@@ -23,12 +23,52 @@ export class FlightService {
           },
         ],
       },
+      include: {
+        Airline: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        ArriveAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        DepartAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+      },
     });
   }
 
   async findById(id: string): Promise<FlightDto> {
     return await this.prisma.flight.findUnique({
       where: { id },
+      include: {
+        Airline: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        ArriveAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        DepartAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+      },
     });
   }
 
@@ -43,8 +83,11 @@ export class FlightService {
   async create(data: FlightDto): Promise<FlightDto> {
     const findFlight = await this.findBynumber(data.flightNo);
     if (findFlight) throw new BadRequestException('Flight already exists');
-    return await this.prisma.flight.create({
+
+    const create = await this.prisma.flight.create({
       data,
     });
+
+    return create;
   }
 }

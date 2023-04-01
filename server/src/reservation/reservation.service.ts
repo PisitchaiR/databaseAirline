@@ -1,15 +1,24 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ReservationDto } from './reservation.dto';
-import { Prisma } from '@prisma/client';
+import { CreateReservationDto, ReservationDto } from './reservation.dto';
 import { FlightService } from '../flight/flight.service';
+import { CouponService } from '../coupon/coupon.service';
 
 @Injectable()
 export class ReservationService {
   constructor(
     private prisma: PrismaService,
     private readonly flightservice: FlightService,
+    private readonly couponservice: CouponService,
   ) {}
+
+  async getById(id: string): Promise<ReservationDto> {
+    return await this.prisma.reservation.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
 
   async getAll(): Promise<ReservationDto[]> {
     return await this.prisma.reservation.findMany();
@@ -28,7 +37,7 @@ export class ReservationService {
     return total;
   }
 
-  async create(data: ReservationDto): Promise<ReservationDto> {
+  async create(data: CreateReservationDto): Promise<ReservationDto> {
     const numberSeat = await this.flightservice.findById(data.flightId);
 
     const totalSeat = await this.findSeatReservationInFlight(data.flightId);
@@ -36,8 +45,16 @@ export class ReservationService {
     if (numberSeat.seat - totalSeat < data.seat)
       throw new BadRequestException('Not enough seat');
 
-    return await this.prisma.reservation.create({
+    if (data.collectCouponId) {
+      //if coupon is exist
+      await this.couponservice.deleteClaimCoupon(data.collectCouponId);
+      delete data.collectCouponId;
+    }
+
+    const create = await this.prisma.reservation.create({
       data,
     });
+
+    return create;
   }
 }

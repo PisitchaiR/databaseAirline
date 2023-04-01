@@ -10,6 +10,14 @@ export class CouponService {
     return await this.prisma.coupon.findMany();
   }
 
+  async deleteClaimCoupon(id: string): Promise<any> {
+    return await this.prisma.collectCoupon.delete({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async claimCoupon(
     userId: string,
     couponId: string,

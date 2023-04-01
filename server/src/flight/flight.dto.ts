@@ -8,10 +8,12 @@ export class FlightDto {
   price: number;
   seat: number;
   planeId: string;
+  airlineId: string;
 }
 
 export class SearchFlight {
   departDate: Date;
   departAirportId: string;
   arriveAirportId: string;
+  airlineId: string;
 }

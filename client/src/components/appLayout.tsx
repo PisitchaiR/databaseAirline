@@ -2,14 +2,14 @@ import Meta from "./Meta";
 
 type Props = {
   title: string;
-  child: React.ReactNode;
+  children: React.ReactNode;
 };
 
-const AppLayout = ({ title, child }: Props) => {
+const AppLayout = ({ title, children }: Props) => {
   return (
     <>
       <Meta title={title} />
-      <main className="w-full ">{child}</main>
+      <main className="max-w-full min-h-screen">{children}</main>
     </>
   );
 };

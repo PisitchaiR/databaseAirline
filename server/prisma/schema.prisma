@@ -32,9 +32,8 @@ model CollectCoupon {
   createdAt DateTime @default(now()) @map("CREATED_AT")
   updatedAt DateTime @updatedAt @map("UPDATED_AT")
 
-  User        User         @relation(fields: [userId], references: [id])
-  Coupon      Coupon       @relation(fields: [couponId], references: [id])
-  Reservation Reservation?
+  User   User   @relation(fields: [userId], references: [id])
+  Coupon Coupon @relation(fields: [couponId], references: [id])
 
   @@map("Collect_Coupon")
 }
@@ -46,6 +45,7 @@ model Coupon {
   expiredAt DateTime @map("COUPON_EXPIRED_AT")
 
   CollectCoupon CollectCoupon[] //รายการคูปองที่เก็บไว้
+  Reservation   Reservation?
 }
 
 model Reservation {
@@ -55,10 +55,13 @@ model Reservation {
   seat       Int     @map("SEAT")
   couponId   String? @unique @map("COUPON_ID")
   totalPrice Float   @map("TOTAL_PRICE")
+  firstName  String  @map("FIRST_NAME")
+  lastName   String  @map("LAST_NAME")
+  phone      String  @map("PHONE")
 
-  User   User           @relation(fields: [userId], references: [id])
-  Flight Flight         @relation(fields: [flightId], references: [id])
-  Coupon CollectCoupon? @relation(fields: [couponId], references: [id])
+  User   User    @relation(fields: [userId], references: [id])
+  Flight Flight  @relation(fields: [flightId], references: [id])
+  Coupon Coupon? @relation(fields: [couponId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,11 +79,13 @@ model Flight {
   price           Float    @map("PRICE")
   seat            Int      @map("SEAT")
   planeId         String   @map("PLANE_ID")
+  airlineId       String   @map("AIRLINE_ID")
 
   Plane         Plane         @relation(fields: [planeId], references: [id])
   ArriveAirport Airport       @relation("FlightTo", fields: [arriveAirportId], references: [id])
   DepartAirport Airport       @relation("FlightFrom", fields: [departAirportId], references: [id])
   Reservation   Reservation[]
+  Airline       Airline       @relation(fields: [airlineId], references: [id])
 }
 
 model Airline {
@@ -90,6 +95,7 @@ model Airline {
   nameEn  String @unique @map("NAME_EN")
   phone   String @unique @map("PHONE")
 
+  Flight           Flight[] //รายการเที่ยวบิน
   User             User?              @relation(fields: [ownerId], references: [id])
   Plane            Plane[] //รายการเครื่องบิน
   AirlineInAirport AirlineInAirport[] //รายการสนามบิน

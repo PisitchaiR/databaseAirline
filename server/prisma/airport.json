@@ -1,98 +1,78 @@
 [
-    {
-      "nameTh": "ท่าอากาศยานสุวรรณภูมิ",
-      "nameEn": "Suvarnabhumi Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานดอนเมือง",
-      "nameEn": "Don Mueang International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานภูเก็ต",
-      "nameEn": "Phuket International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานเชียงใหม่",
-      "nameEn": "Chiang Mai International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานหาดใหญ่",
-      "nameEn": "Hat Yai International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานตรัง",
-      "nameEn": "Trang Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานนครศรีธรรมราช",
-      "nameEn": "Nakhon Si Thammarat Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานอุดรธานี",
-      "nameEn": "Udon Thani International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานหาดใหญ่สนามบินสายการบินไทย",
-      "nameEn": "Hat Yai International Airport (Thai Airways)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานภูเก็ตสนามบินนานาชาติ",
-      "nameEn": "Phuket International Airport (International Terminal)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานมหานคร",
-      "nameEn": "Mahanakhon Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานเชียงราย",
-      "nameEn": "Chiang Rai International Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานอุบลราชธานี",
-      "nameEn": "Ubon Ratchathani Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสมุย",
-      "nameEn": "Samui Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานศรีสะเกษ",
-      "nameEn": "Sakon Nakhon Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานบุรีรัมย์",
-      "nameEn": "Buri Ram Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานนครราชสีมา",
-      "nameEn": "Nakhon Ratchasima Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสงขลา",
-      "nameEn": "Songkhla Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานนครศรีธรรมราชสนามบินนานาชาติ",
-      "nameEn": "Nakhon Si Thammarat Airport (International Terminal)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานนครศรีธรรมราชสนามบินสายการบินไทย",
-      "nameEn": "Nakhon Si Thammarat Airport (Thai Airways)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสุราษฎร์ธานี",
-      "nameEn": "Surat Thani Airport"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสุราษฎร์ธานีสนามบินนานาชาติ",
-      "nameEn": "Surat Thani Airport (International Terminal)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสุราษฎร์ธานีสนามบินสายการบินไทย",
-      "nameEn": "Surat Thani Airport (Thai Airways)"
-    },
-    {
-      "nameTh": "ท่าอากาศยานสุราษฎร์ธานีสนามบินสายการบินไทย",
-      "nameEn": "Surat Thani Airport (Thai Airways)"
-    }
+  {
+    "nameTh": "ท่าอากาศยานสุวรรณภูมิ",
+    "nameEn": "Suvarnabhumi Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานดอนเมือง",
+    "nameEn": "Don Mueang International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "nameEn": "Phuket International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "nameEn": "Chiang Mai International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานหาดใหญ่",
+    "nameEn": "Hat Yai International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานตรัง",
+    "nameEn": "Trang Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานนครศรีธรรมราช",
+    "nameEn": "Nakhon Si Thammarat Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานอุดรธานี",
+    "nameEn": "Udon Thani International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานหาดใหญ่สนามบินสายการบินไทย",
+    "nameEn": "Hat Yai International Airport (Thai Airways)"
+  },
+  {
+    "nameTh": "ท่าอากาศยานภูเก็ตสนามบินนานาชาติ",
+    "nameEn": "Phuket International Airport (International Terminal)"
+  },
+  {
+    "nameTh": "ท่าอากาศยานมหานคร",
+    "nameEn": "Mahanakhon Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานเชียงราย",
+    "nameEn": "Chiang Rai International Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานอุบลราชธานี",
+    "nameEn": "Ubon Ratchathani Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานสมุย",
+    "nameEn": "Samui Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานศรีสะเกษ",
+    "nameEn": "Sakon Nakhon Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานบุรีรัมย์",
+    "nameEn": "Buri Ram Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานนครราชสีมา",
+    "nameEn": "Nakhon Ratchasima Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานสงขลา",
+    "nameEn": "Songkhla Airport"
+  },
+  {
+    "nameTh": "ท่าอากาศยานสุราษฎร์ธานี",
+    "nameEn": "Surat Thani Airport"
+  }
 ]

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FlightService } from './flight.service';
 import { FlightDto } from './flight.dto';
 
@@ -14,5 +14,10 @@ export class FlightController {
   @Post('/search')
   async findBySearch(@Body() data: any) {
     return await this.flightService.findBySearch(data);
+  }
+
+  @Get('/:id')
+  async findById(@Param('id') id: string) {
+    return await this.flightService.findById(id);
   }
 }
