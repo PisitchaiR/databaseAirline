@@ -21,6 +21,9 @@ export class UsersService {
   async findById(id: string): Promise<UserDto> {
     return await this.prisma.user.findUnique({
       where: { id },
+      include: {
+        airline: true,
+      },
     });
   }
 

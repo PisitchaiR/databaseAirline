@@ -16,6 +16,11 @@ export class UsersController {
     return await this.usersService.createUser(data);
   }
 
+  @Get(':id')
+  async getUser(@Param('id') id: string) {
+    return await this.usersService.findById(id);
+  }
+
   @Get('history/:id')
   async getReservation(@Param('id') id: string) {
     return await this.usersService.getReservation(id);

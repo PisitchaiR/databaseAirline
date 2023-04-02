@@ -9,6 +9,14 @@ export class AirlinesService {
   async findById(id: string): Promise<AirlinesDto> {
     return await this.prisma.airline.findUnique({
       where: { id },
+      include: {
+        Flight: {
+          include: {
+            Reservation: true,
+          },
+        },
+        Plane: true,
+      },
     });
   }
 
@@ -20,9 +28,8 @@ export class AirlinesService {
     });
   }
 
-  async create(data: CreateAirline): Promise<AirlinesDto> {
+  async create(data: CreateAirline): Promise<CreateAirline> {
     const findAirline = await this.findByName(data.nameTh, data.nameEn);
-    console.log(findAirline);
     if (findAirline.length > 0)
       throw new BadRequestException('Airline already exists');
     return await this.prisma.airline.create({

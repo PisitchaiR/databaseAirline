@@ -24,3 +24,37 @@ export class SearchFlight {
     this.arriveDate = "";
   }
 }
+
+export class CreatePlane {
+  name: string;
+  seat: number;
+  airlineId: string;
+  constructor() {
+    this.airlineId = "";
+    this.name = "";
+    this.seat = 0;
+  }
+}
+
+export class CreateFlight {
+  flightNo: string;
+  departDate: string;
+  arriveDate: string;
+  departAirportId: string;
+  arriveAirportId: string;
+  price: number;
+  seat: number;
+  planeId: string;
+  airlineId: string;
+  constructor() {
+    this.airlineId = "";
+    this.flightNo = "";
+    this.departDate = "";
+    this.arriveDate = "";
+    this.departAirportId = "";
+    this.arriveAirportId = "";
+    this.price = 0.0;
+    this.seat = 0;
+    this.planeId = "";
+  }
+}

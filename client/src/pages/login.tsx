@@ -36,7 +36,6 @@ const Auth = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login`,
         loginState
       );
-      console.log(res.data);
       setCookie("userId", res.data.id);
       setCookie("role", res.data.role);
       if (res.data.role == "personnel") {
@@ -55,7 +54,7 @@ const Auth = () => {
       }
       toast.error(text, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

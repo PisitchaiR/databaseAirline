@@ -10,6 +10,7 @@ const Navbar = ({ white }: { white?: boolean }) => {
 
   const handlerLogout = async () => {
     deleteCookie("userId");
+    localStorage.removeItem("userRole");
     router.push("/login");
   };
 

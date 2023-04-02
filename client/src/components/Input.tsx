@@ -2,7 +2,7 @@ type NewType = {
   label: string;
   type: string;
   name: string;
-  value: string;
+  value: any;
   className?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;

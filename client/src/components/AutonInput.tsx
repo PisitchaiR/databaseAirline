@@ -35,12 +35,12 @@ export default function AutonInput({
 
   return (
     <div className="w-full">
-      <Combobox value={inputState[name].nameTh || ''} onChange={set}>
+      <Combobox value={inputState[name]?.nameTh || ''} onChange={set}>
         <div className="relative mt-1">
           <div className="relative h-16 w-full cursor-default overflow-hidden rounded-lg flex items-center border border-primary bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 focus:outline-none"
-              displayValue={inputState[name].nameTh || ''}
+              displayValue={inputState[name]?.nameTh || ''}
               onChange={(event) => setQuery(event.target.value)}
             />
             <Combobox.Button className="items-center pr-2 flex flex-col -space-y-3">
@@ -78,7 +78,7 @@ export default function AutonInput({
                             selected ? "font-medium" : "font-normal"
                           }`}
                         >
-                          {airport.nameTh}
+                          {airport?.nameTh}
                         </span>
                         {selected ? (
                           <span

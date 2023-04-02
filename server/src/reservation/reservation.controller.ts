@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post, Param } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import { ReservationService } from './reservation.service';
 import { ReservationDto } from './reservation.dto';
 

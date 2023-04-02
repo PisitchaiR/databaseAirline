@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { FlightService } from './flight.service';
 import { FlightDto } from './flight.dto';
 
@@ -19,5 +19,14 @@ export class FlightController {
   @Get('/:id')
   async findById(@Param('id') id: string) {
     return await this.flightService.findById(id);
+  }
+
+  @Get('/airline/:id')
+  async findByAirlineId(@Param('id') id: string) {
+    return await this.flightService.findByAirlineId(id);
+  }
+  @Delete('/:id')
+  async delete(@Param('id') id: string) {
+    return await this.flightService.delete(id);
   }
 }

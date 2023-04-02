@@ -10,4 +10,5 @@ export class UserDto {
   email: string;
   password: string;
   role: Role;
+  airlineId?: string;
 }

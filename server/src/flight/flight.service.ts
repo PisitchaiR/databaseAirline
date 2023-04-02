@@ -46,6 +46,49 @@ export class FlightService {
     });
   }
 
+  async findByAirlineId(id: string): Promise<FlightDto[]> {
+    const flight = await this.prisma.flight.findMany({
+      where: {
+        airlineId: id,
+      },
+      include: {
+        Airline: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        ArriveAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+        DepartAirport: {
+          select: {
+            nameTh: true,
+            nameEn: true,
+          },
+        },
+      },
+    });
+    const result = [];
+    flight.map((item) => {
+      result.push({
+        id: item.id,
+        flightNo: item.flightNo,
+        departDate: item.departDate,
+        arriveDate: item.arriveDate,
+        price: item.price,
+        Airline: item.Airline.nameTh,
+        ArriveAirport: item.ArriveAirport.nameTh,
+        DepartAirport: item.DepartAirport.nameTh,
+      });
+    });
+
+    return result;
+  }
+
   async findById(id: string): Promise<FlightDto> {
     return await this.prisma.flight.findUnique({
       where: { id },
@@ -89,5 +132,13 @@ export class FlightService {
     });
 
     return create;
+  }
+
+  async delete(id: string): Promise<any> {
+    return await this.prisma.flight.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

@@ -5,11 +5,14 @@ specifiers:
   '@emotion/styled': ^11.10.6
   '@headlessui/react': ^1.7.13
   '@mui/lab': 5.0.0-alpha.124
+  '@mui/material': ^5.11.15
+  '@mui/x-data-grid': ^6.0.4
   '@types/node': 18.15.11
   '@types/react': 18.0.31
   '@types/react-dom': 18.0.11
   autoprefixer: ^10.4.14
   axios: ^1.3.4
+  chart.js: ^4.2.1
   cookies-next: ^2.1.1
   dayjs: ^1.11.7
   eslint: 8.37.0
@@ -17,9 +20,11 @@ specifiers:
   next: 13.2.4
   postcss: ^8.4.21
   react: 18.2.0
+  react-chartjs-2: ^5.2.0
   react-dom: 18.2.0
   react-tailwindcss-datepicker: ^1.5.1
   react-toastify: ^9.1.2
+  styles: link:@mui/material/styles
   tailwindcss: ^3.3.1
   typescript: 5.0.3
 
@@ -28,19 +33,24 @@ dependencies:
   '@emotion/styled': 11.10.6_y3jktkphxddpitstssvkgnnxe4
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
   '@mui/lab': 5.0.0-alpha.124_wnjxvio7yothc5r74xfq2ssl4a
+  '@mui/material': 5.11.15_we7fkeim3mnobwhg4eygxpogke
+  '@mui/x-data-grid': 6.0.4_2x4gncya3zfs52m5lku7dvteki
   '@types/node': 18.15.11
   '@types/react': 18.0.31
   '@types/react-dom': 18.0.11
   axios: 1.3.4
+  chart.js: 4.2.1
   cookies-next: 2.1.1
   dayjs: 1.11.7
   eslint: 8.37.0
   eslint-config-next: 13.2.4_vwh6htx42aidho2qgfca5u5rwm
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
+  react-chartjs-2: 5.2.0_t5yjg6ab35jnsudnh2qdighszm
   react-dom: 18.2.0_react@18.2.0
   react-tailwindcss-datepicker: 1.5.1_dayjs@1.11.7+react@18.2.0
   react-toastify: 9.1.2_biqbaboplfbrettd7655fr4n2y
+  styles: link:@mui/material/styles
   typescript: 5.0.3
 
 devDependencies:
@@ -284,6 +294,10 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: false
 
+  /@kurkle/color/0.3.2:
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
+    dev: false
+
   /@mui/base/5.0.0-alpha.122_6ayuu6vm2uqggsikytom4xssc4:
     resolution: {integrity: sha512-IgZEFQyHa39J1+Q3tekVdhPuUm1fr3icddaNLmiAIeYTVXmR7KR5FhBAIL0P+4shlPq0liUPGlXryoTm0iCeFg==}
     engines: {node: '>=12.0.0'}
@@ -498,6 +512,26 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-is: 18.2.0
+    dev: false
+
+  /@mui/x-data-grid/6.0.4_2x4gncya3zfs52m5lku7dvteki:
+    resolution: {integrity: sha512-SPkxmPhVU0hJEun/Ju5do5CPVzJj4NHT5XEPpfvDyVhHR4p4ax/EiXbtmLBl5d+D/tA8uaLEK0PUQWBLC8JNQA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@mui/material': ^5.4.1
+      '@mui/system': ^5.4.1
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@mui/material': 5.11.15_we7fkeim3mnobwhg4eygxpogke
+      '@mui/system': 5.11.15_7q5gdzubmolj22qnry5jpfqmbe
+      '@mui/utils': 5.11.13_react@18.2.0
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      reselect: 4.1.7
     dev: false
 
   /@next/env/13.2.4:
@@ -1033,6 +1067,13 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: false
+
+  /chart.js/4.2.1:
+    resolution: {integrity: sha512-6YbpQ0nt3NovAgOzbkSSeeAQu/3za1319dPUQTXn9WcOpywM8rGKxJHrhS8V8xEkAlk8YhEfjbuAPfUyp6jIsw==}
+    engines: {pnpm: ^7.0.0}
+    dependencies:
+      '@kurkle/color': 0.3.2
     dev: false
 
   /chokidar/3.5.3:
@@ -2630,6 +2671,16 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /react-chartjs-2/5.2.0_t5yjg6ab35jnsudnh2qdighszm:
+    resolution: {integrity: sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 4.2.1
+      react: 18.2.0
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -2714,6 +2765,10 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.2.0
       functions-have-names: 1.2.3
+    dev: false
+
+  /reselect/4.1.7:
+    resolution: {integrity: sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==}
     dev: false
 
   /resolve-from/4.0.0:
