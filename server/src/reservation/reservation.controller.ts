@@ -16,6 +16,13 @@ export class ReservationController {
     return await this.reservationservice.create(data);
   }
 
+  @Get('/airline/:id')
+  async getReservationByAirlineId(
+    @Param('id') airlineId: string,
+  ): Promise<ReservationDto[]> {
+    return await this.reservationservice.getReservationByAirlineId(airlineId);
+  }
+
   @Get('/:id')
   async getById(@Param('id') id: string): Promise<ReservationDto> {
     return await this.reservationservice.getById(id);

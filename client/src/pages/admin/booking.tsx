@@ -9,7 +9,7 @@ const Booking = ({ airlineId }: { airlineId: string }) => {
   const [reservation, setReservation] = useState([]);
 
   useEffect(() => {
-    getReservation;
+    getReservation();
   }, []);
 
   const getReservation = async () => {
@@ -17,6 +17,7 @@ const Booking = ({ airlineId }: { airlineId: string }) => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/reservation/airline/${airlineId}`
     );
     setReservation(res.data);
+    console.log(res.data);
   };
 
   return (
@@ -27,7 +28,7 @@ const Booking = ({ airlineId }: { airlineId: string }) => {
           <div className="border h-full flex-grow p-5">
             <p className="text-3xl">จัดการสายการบิน</p>
             <div className="w-full border-t border-primary mt-10 pt-10">
-              <BookingDataTable />
+              <BookingDataTable data={reservation} />
             </div>
           </div>
         </div>

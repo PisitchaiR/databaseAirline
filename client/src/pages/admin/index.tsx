@@ -45,7 +45,7 @@ const Home = ({ airlineId }: { airlineId: string }) => {
             <p className="text-3xl">ภาพรวม</p>
             <div className="flex flex-col items-start mt-10 w-full">
               <p className="">ผู้โดยสาร</p>
-              <div className="flex gap-x-5 items-center mt-5 w-full">
+              <div className="flex gap-x-5 items-center mt-2 w-full">
                 <div className="bg-white p-2 shadow rounded-md flex flex-col px-4 w-1/3">
                   <p>จำนวนผู้โดยสารทั้งหมด</p>
                   <p className="text-3xl mt-3">{countSeatInReservation()}</p>
@@ -56,9 +56,9 @@ const Home = ({ airlineId }: { airlineId: string }) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-start mt-10 w-full">
+            <div className="flex flex-col items-start mt-5 w-full">
               <p className="">เครื่องบิน</p>
-              <div className="flex gap-x-5 items-center mt-5 w-full">
+              <div className="flex gap-x-5 items-center mt-2 w-full">
                 <div className="bg-white p-2 shadow rounded-md flex flex-col px-4 w-1/3">
                   <p>เที่ยวบินทั้งหมด</p>
                   <p className="text-3xl mt-3">{airline?.Flight?.length}</p>

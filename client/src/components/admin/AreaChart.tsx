@@ -30,10 +30,6 @@ export default function App({ airline }: { airline: string }) {
       legend: {
         position: "top" as const,
       },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
     },
   };
 

@@ -18,6 +18,10 @@ const SideBar = () => {
             <p className="material-icons-outlined">analytics</p>{" "}
             <p className="text-xl">ภาพรวม</p>
           </Link>
+          <Link href="/admin/booking" className="flex items-center gap-x-2">
+            <p className="material-icons-outlined">reorder</p>{" "}
+            <p className="text-xl">รายการจอง</p>
+          </Link>
           <Link href="/admin/flight" className="flex items-center gap-x-2">
             <p className="material-icons-outlined rotate-90">sync_alt</p>{" "}
             <p className="text-xl">เที่ยวบิน</p>

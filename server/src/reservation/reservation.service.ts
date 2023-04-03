@@ -37,6 +37,26 @@ export class ReservationService {
     return total;
   }
 
+  async getReservationByAirlineId(airlineId: string): Promise<any[]> {
+    const flight = await this.prisma.flight.findMany({
+      where: {
+        airlineId: airlineId,
+      },
+      select: {
+        Reservation: true,
+      },
+    });
+
+    const result = [];
+    flight.map((item) => {
+      item.Reservation.map((item) => {
+        result.push(item);
+      });
+    });
+
+    return result;
+  }
+
   async create(data: CreateReservationDto): Promise<ReservationDto> {
     const numberSeat = await this.flightservice.findById(data.flightId);
 
