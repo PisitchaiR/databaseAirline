@@ -67,7 +67,6 @@ export default function App({ airline }: { airline: string }) {
       flight.Reservation.map((reservation: any) => {
         const date = new Date(reservation.createdAt);
         const month = date.getMonth();
-        console.log(month);
         switch (month) {
           case 0:
             monthData.January += 1;

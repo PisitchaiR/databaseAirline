@@ -34,8 +34,6 @@ const Flight = ({ open, setOpen, airlineId, getFlight }: Props) => {
 
   const handlerSubmit = async () => {
     try {
-      console.log(flightState);
-
       const data = {
         airlineId: airlineId,
         flightNo: flightState.flightNo,

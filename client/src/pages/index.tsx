@@ -31,7 +31,6 @@ const Index = ({ airPort }: { airPort: any }) => {
       localStorage.setItem("searchFlight", JSON.stringify(inputState));
       router.push("/booking/search");
     } else {
-      console.log(inputState);
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
   };

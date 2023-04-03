@@ -92,7 +92,6 @@ const Booking = ({ coupon, userId }: Props) => {
       const getDepartFlight = await JSON.parse(
         localStorage.getItem("departFlight") || "{}"
       );
-      console.log(getDepartFlight);
       SetSearchFlightData(getDepartFlight);
       SetSearchData(getSearchData);
     }
@@ -215,7 +214,6 @@ export const getServerSideProps = async (context: any) => {
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/coupon/${userId}`
   );
   const coupon = resCoupon.data;
-  console.log(coupon);
   if (!userId) {
     return {
       redirect: {

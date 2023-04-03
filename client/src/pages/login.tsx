@@ -62,7 +62,6 @@ const Auth = () => {
         progress: undefined,
         theme: "light",
       });
-      console.log(error?.response?.data?.message);
     }
   };
 
@@ -109,7 +108,6 @@ const Auth = () => {
         progress: undefined,
         theme: "light",
       });
-      console.log(error?.response?.data?.message);
     }
   };
 

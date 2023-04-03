@@ -24,7 +24,6 @@ const Coupon = ({ coupon, claim, userId }: Props) => {
           couponId: coupon._id,
         }
       );
-      console.log(res.data);
     } catch (error: any) {
       console.log(error?.resopne?.data?.message);
     }
