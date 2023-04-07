@@ -21,10 +21,11 @@ const Coupon = ({ coupon, claim, userId }: Props) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon/claim`,
         {
           userId: userId,
-          couponId: coupon._id,
+          couponId: coupon.id,
         }
       );
     } catch (error: any) {
+      console.log(error)
       console.log(error?.resopne?.data?.message);
     }
   };

@@ -49,7 +49,6 @@ const Flight = ({ open, setOpen, airlineId, getFlight }: Props) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/flight`,
         data
       );
-      console.log(res.data);
       getFlight();
       setOpen(false);
     } catch (error) {

@@ -66,7 +66,7 @@ export default function SideBar({ open, setOpen }: Props) {
                       ประวัติการจอง
                     </Link>
                     <Link
-                      href="/coupon"
+                      href="/user/coupon"
                       className="text-xl flex items-center gap-x-2 w-full rounded-md p-1"
                     >
                       <span className="material-icons-outlined">
