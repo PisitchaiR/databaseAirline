@@ -1,0 +1,5 @@
+-- DropForeignKey
+ALTER TABLE "Reservation" DROP CONSTRAINT "Reservation_COUPON_ID_fkey";
+
+-- AddForeignKey
+ALTER TABLE "Reservation" ADD CONSTRAINT "Reservation_COUPON_ID_fkey" FOREIGN KEY ("COUPON_ID") REFERENCES "Coupon"("COUPON_ID") ON DELETE SET NULL ON UPDATE CASCADE;

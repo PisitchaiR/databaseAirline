@@ -8,125 +8,139 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//user
 model User {
-  id          String        @id @default(cuid())
-  email       String        @unique
-  password    String
-  role        Role          @default(admin)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  reservation Reservation[]
+  id       String @id @default(cuid()) @map("USER_ID")
+  email    String @unique @map("EMAIL")
+  password String @map("PASSWORD")
+  role     Role   @default(customer) @map("ROLE")
+
+  airline       Airline? //airline of user 
+  CollectCoupon CollectCoupon[]
+  Reservation   Reservation[]
 }
 
 enum Role {
-  admin
-  user
-  superAdmin
+  customer
+  personnel
+}
+
+model CollectCoupon {
+  id        String   @id @default(cuid()) @map("COLLECT_COUPON_ID")
+  userId    String   @map("USER_ID")
+  couponId  String   @map("COUPON_ID")
+  createdAt DateTime @default(now()) @map("CREATED_AT")
+  updatedAt DateTime @updatedAt @map("UPDATED_AT")
+
+  User   User   @relation(fields: [userId], references: [id])
+  Coupon Coupon @relation(fields: [couponId], references: [id])
+
+  @@map("Collect_Coupon")
 }
 
 model Coupon {
-  id          String        @id @default(cuid())
-  name        String
-  discount    Int
-  expired     DateTime
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Reservation Reservation[]
+  id        String   @id @default(cuid()) @map("COUPON_ID")
+  name      String   @unique @map("COUPON_NAME")
+  discount  Int      @map("COUPON_DISCOUNT")
+  expiredAt DateTime @map("COUPON_EXPIRED_AT")
+
+  CollectCoupon CollectCoupon[] //รายการคูปองที่เก็บไว้
+  Reservation   Reservation?
 }
 
 model Reservation {
-  id        String   @id @default(cuid())
-  firstName String   @map("first_name")
-  lastName  String   @map("last_name")
-  email     String
-  phone     String
-  date      DateTime
-  idCoupon  String?
-  Coupon    Coupon?  @relation(fields: [idCoupon], references: [id])
-  idUser    String
-  User      User     @relation(fields: [idUser], references: [id])
-  flightId  String
-  Flight    Flight   @relation(fields: [flightId], references: [id])
+  id         String  @id @default(cuid()) @map("RESERVATION_ID")
+  userId     String  @map("USER_ID")
+  flightId   String  @map("FLIGHT_ID")
+  seat       Int     @map("SEAT")
+  couponId   String? @unique @map("COUPON_ID")
+  totalPrice Float   @map("TOTAL_PRICE")
+  firstName  String  @map("FIRST_NAME")
+  lastName   String  @map("LAST_NAME")
+  phone      String  @map("PHONE")
+
+  User   User    @relation(fields: [userId], references: [id])
+  Flight Flight  @relation(fields: [flightId], references: [id])
+  Coupon Coupon? @relation(fields: [couponId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("Reservation")
 }
 
 model Flight {
-  id            String        @id @default(cuid())
-  type          flightType
-  price         Float
-  departureDate DateTime      @map("departure_date")
-  arrivalDate   DateTime      @map("arrival_date")
-  fromAirportId String        @map("from_airport_id")
-  toAirportId   String        @map("to_airport_id")
-  airlineId     String?
-  planeId       String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id              String   @id @default(cuid()) @map("FLIGHT_ID")
+  flightNo        String   @unique @map("FLIGHT_NO")
+  departDate      DateTime @map("DEPART_DATE") //วันที่ออกเดินทาง 
+  arriveDate      DateTime @map("ARRIVE_DATE") //วันที่ถึง
+  departAirportId String   @map("DEPART_AIRPORT_ID") //สนามบินต้นทาง
+  arriveAirportId String   @map("ARRIVE_AIRPORT_ID") //สนามบินปลายทาง
+  price           Float    @map("PRICE")
+  seat            Int      @map("SEAT")
+  planeId         String   @map("PLANE_ID")
+  airlineId       String   @map("AIRLINE_ID")
+
+  Plane         Plane         @relation(fields: [planeId], references: [id])
+  ArriveAirport Airport       @relation("FlightTo", fields: [arriveAirportId], references: [id])
+  DepartAirport Airport       @relation("FlightFrom", fields: [departAirportId], references: [id])
   Reservation   Reservation[]
-  FromAirport   AirPort       @relation("FromAirport", fields: [fromAirportId], references: [id])
-  ToAirport     AirPort       @relation("ToAirport", fields: [toAirportId], references: [id])
-  Airline       Airline?      @relation(fields: [airlineId], references: [id])
-  Plane         Plane?        @relation(fields: [planeId], references: [id])
-}
-
-enum flightType {
-  oneWay
-  twoWay
-}
-
-model AirPort {
-  id            String             @id @default(cuid())
-  nameTh        String             @map("name_th")
-  nameEg        String             @map("name_eg")
-  fromAirportId Flight[]           @relation("FromAirport")
-  toAirportId   Flight[]           @relation("ToAirport")
-  airline       AirlineInAirport[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
-
-  @@map("Air_Port")
-}
-
-model Plane {
-  id        String      @id @default(cuid())
-  name      String
-  airlineId String?     @map("airline_id")
-  status    planeStatus @default(available)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  flight    Flight[]
-  Airline   Airline?    @relation(fields: [airlineId], references: [id])
-}
-
-enum planeStatus {
-  available
-  unavailable
+  Airline       Airline       @relation(fields: [airlineId], references: [id])
 }
 
 model Airline {
-  id        String             @id @default(cuid())
-  name      String
-  phone     String
-  date      DateTime
-  plane     Plane[]
-  flight    Flight[]
-  airport   AirlineInAirport[]
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
+  id      String @id @default(cuid()) @map("AIRLINE_ID")
+  ownerId String @unique @map("OWNER_ID")
+  nameTh  String @unique @map("NAME_TH")
+  nameEn  String @unique @map("NAME_EN")
+  phone   String @unique @map("PHONE")
+
+  Flight           Flight[] //รายการเที่ยวบิน
+  User             User?              @relation(fields: [ownerId], references: [id])
+  Plane            Plane[] //รายการเครื่องบิน
+  AirlineInAirport AirlineInAirport[] //รายการสนามบิน
 }
 
-//airline in airport 
-model AirlineInAirport {
-  id        String   @id @default(cuid())
-  nameTh    String   @map("name_th")
-  nameEg    String   @map("name_eg")
-  airPortId String?  @map("air_port_id")
-  airlineId String?  @map("airline_id")
-  AirPort   AirPort? @relation(fields: [airPortId], references: [id])
+model Plane {
+  id   String @id @default(cuid()) @map("PLANE_ID")
+  name String @unique @map("PLANE_NAME")
+  seat Int    @map("PLANE_SEAT")
+
+  airlineId String?
   Airline   Airline? @relation(fields: [airlineId], references: [id])
+  Flight    Flight[]
+}
+
+model AirlineInAirport {
+  id        String @id @default(cuid()) @map("AIRLINE_IN_AIRPORT_ID")
+  airlineId String @map("AIRLINE_ID")
+  airportId String @map("AIRPORT_ID")
+
+  Airline   Airline  @relation(fields: [airlineId], references: [id])
+  Airport   Airport  @relation(fields: [airportId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@map("Airline_In_Airport")
+}
+
+model Airport {
+  id          String @id @default(cuid()) @map("AIRPORT_ID")
+  nameTh      String @unique @map("NAME_TH")
+  nameEn      String @unique @map("NAME_EN")
+  countriesId String @map("COUNTRIES_ID")
+
+  Country          Countries          @relation(fields: [countriesId], references: [code])
+  AirlineInAirport AirlineInAirport[]
+  FlightArrive     Flight[]           @relation("FlightFrom")
+  FlightDepart     Flight[]           @relation("FlightTo")
+}
+
+model Countries {
+  code   String @id @map("CODE")
+  nameTh String @unique @map("NAME_TH")
+  nameEn String @unique @map("NAME_EN")
+
+  Airport   Airport[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
