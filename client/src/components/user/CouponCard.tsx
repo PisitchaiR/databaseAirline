@@ -17,7 +17,7 @@ const Coupon = ({ coupon, claim, userId }: Props) => {
   };
   const handlerCliam = async () => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon/claim`,
         {
           userId: userId,
