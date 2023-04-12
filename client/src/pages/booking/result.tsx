@@ -182,7 +182,7 @@ const Result = () => {
               </p>
             </div>
             <Link
-              href=""
+              href="/"
               className="w-full rounded-md bg-primary text-white py-3 text-center"
             >
               ปิด

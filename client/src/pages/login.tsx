@@ -52,7 +52,7 @@ const Auth = () => {
       if (error.response?.data?.message == "Password doesn't match") {
         text = "รหัสผ่านผิด";
       }
-      toast.error(text, {
+      toast.error(text || error?.response?.data, {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,

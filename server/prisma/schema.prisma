@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -32,8 +32,8 @@ model CollectCoupon {
   createdAt DateTime @default(now()) @map("CREATED_AT")
   updatedAt DateTime @updatedAt @map("UPDATED_AT")
 
-  User   User   @relation(fields: [userId], references: [id])
-  Coupon Coupon @relation(fields: [couponId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Coupon Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
 
   @@map("Collect_Coupon")
 }
@@ -96,7 +96,7 @@ model Airline {
   phone   String @unique @map("PHONE")
 
   Flight           Flight[] //รายการเที่ยวบิน
-  User             User?              @relation(fields: [ownerId], references: [id])
+  User             User?              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   Plane            Plane[] //รายการเครื่องบิน
   AirlineInAirport AirlineInAirport[] //รายการสนามบิน
 }
@@ -107,7 +107,7 @@ model Plane {
   seat Int    @map("PLANE_SEAT")
 
   airlineId String?
-  Airline   Airline? @relation(fields: [airlineId], references: [id])
+  Airline   Airline? @relation(fields: [airlineId], references: [id], onDelete: Cascade)
   Flight    Flight[]
 }
 
@@ -116,8 +116,8 @@ model AirlineInAirport {
   airlineId String @map("AIRLINE_ID")
   airportId String @map("AIRPORT_ID")
 
-  Airline   Airline  @relation(fields: [airlineId], references: [id])
-  Airport   Airport  @relation(fields: [airportId], references: [id])
+  Airline   Airline  @relation(fields: [airlineId], references: [id], onDelete: Cascade)
+  Airport   Airport  @relation(fields: [airportId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@map("Airline_In_Airport")
