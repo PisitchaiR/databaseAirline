@@ -35,7 +35,7 @@ const Flight = ({ airlineId }: { airlineId: string }) => {
         <div className="w-full h-screen flex items-center">
           <SideBar />
           <div className="border h-full flex-grow p-5">
-            <p className="text-3xl">จัดการสายการบิน</p>
+            <p className="text-3xl">จัดการเที่ยวบิน</p>
             <button
               onClick={() => setCreateOpen(true)}
               className="mt-10 bg-primary text-white px-6 py-2 rounded-md"
