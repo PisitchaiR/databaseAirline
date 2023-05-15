@@ -71,7 +71,7 @@ const Booking = ({ coupon, userId }: Props) => {
         data
       );
       localStorage.setItem("reservation", JSON.stringify(res.data));
-      router.push("/booking/confirm");
+      router.push("/booking/result");
       setReservation({
         seat: "",
         firstName: "",
@@ -96,6 +96,8 @@ const Booking = ({ coupon, userId }: Props) => {
       SetSearchData(getSearchData);
     }
   };
+
+  //อุดร ไป หาดใหญ่ 
 
   return (
     <AppLayout title="หน้าแรก">

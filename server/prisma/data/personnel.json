@@ -1,0 +1,42 @@
+[
+  {
+    "email": "jamesjohnson@gmail.com",
+    "password": "password"
+  },
+  {
+    "email": "amandabrown@yahoo.com",
+    "password": "password"
+  },
+  {
+    "email": "davidsmith@gmail.com",
+    "password": "password"
+  },
+  {
+    "email": "annawilson@hotmail.com",
+    "password": "password"
+  },
+  {
+    "email": "peterparker@gmail.com",
+    "password": "password"
+  },
+  {
+    "email": "nnn8831@example.com",
+    "password": "password"
+  },
+  {
+    "email": "john.doe1245@example.com",
+    "password": "password"
+  },
+  {
+    "email": "sarah_l@example.com",
+    "password": "password"
+  },
+  {
+    "email": "james92@example.com",
+    "password": "password"
+  },
+  {
+    "email": "kate.smith77@example.com",
+    "password": "password"
+  }
+]

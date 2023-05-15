@@ -23,5 +23,30 @@
     "nameTh": "เกาหลีใต้",
     "nameEn": "South Korea",
     "code": "KR"
+  },
+  {
+    "nameTh": "จีน",
+    "nameEn": "China",
+    "code": "CN"
+  },
+  {
+    "nameTh": "เวียดนาม",
+    "nameEn": "Vietnam",
+    "code": "VN"
+  },
+  {
+    "nameTh": "อินเดีย",
+    "nameEn": "India",
+    "code": "IN"
+  },
+  {
+    "nameTh": "อินโดนีเซีย",
+    "nameEn": "Indonesia",
+    "code": "ID"
+  },
+  {
+    "nameTh": "มาเลเซีย",
+    "nameEn": "Malaysia",
+    "code": "MY"
   }
 ]

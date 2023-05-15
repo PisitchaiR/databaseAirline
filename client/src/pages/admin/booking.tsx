@@ -26,7 +26,7 @@ const Booking = ({ airlineId }: { airlineId: string }) => {
         <div className="w-full h-screen flex items-center">
           <SideBar />
           <div className="border h-full flex-grow p-5">
-            <p className="text-3xl">จัดการสายการบิน</p>
+            <p className="text-3xl">รายการจอง</p>
             <div className="w-full border-t border-primary mt-10 pt-10">
               <BookingDataTable data={reservation} />
             </div>

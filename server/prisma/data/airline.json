@@ -1,0 +1,52 @@
+[
+  {
+    "nameTh": "Thai Airways",
+    "nameEn": "Thai Airways International",
+    "phone": "+66-2-356-1111"
+  },
+  {
+    "nameTh": "Bangkok Airways",
+    "nameEn": "Bangkok Airways",
+    "phone": "+66-2-270-6699"
+  },
+  {
+    "nameTh": "Nok Air",
+    "nameEn": "Nok Air",
+    "phone": "+66-2-900-9955"
+  },
+  {
+    "nameTh": "Thai Lion Air",
+    "nameEn": "Thai Lion Air",
+    "phone": "+66-2-529-9999"
+  },
+  {
+    "nameTh": "AirAsia",
+    "nameEn": "AirAsia",
+    "phone": "+66-2-515-9999"
+  },
+  {
+    "nameTh": "VietJet Air",
+    "nameEn": "VietJet Air",
+    "phone": "+66-2-515-9998"
+  },
+  {
+    "nameTh": "Cathay Pacific",
+    "nameEn": "Cathay Pacific",
+    "phone": "+852 2747-3333"
+  },
+  {
+    "nameTh": "Singapore Airlines",
+    "nameEn": "Singapore Airlines",
+    "phone": "+65 6223-8888"
+  },
+  {
+    "nameTh": "Japan Airlines",
+    "nameEn": "Japan Airlines",
+    "phone": "+81-3-5460-0511"
+  },
+  {
+    "nameTh": "Emirates",
+    "nameEn": "Emirates",
+    "phone": "+971 600 555555"
+  }
+]

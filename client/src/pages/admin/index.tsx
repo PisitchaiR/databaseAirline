@@ -69,7 +69,7 @@ const Home = ({ airlineId }: { airlineId: string }) => {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div className="flex-grow">
               <AreaChart airline={airline}/>
             </div>
           </div>

@@ -118,7 +118,7 @@ const Index = ({ airPort }: { airPort: any }) => {
               }}
               startFrom={new Date()}
               placeholder={"วันไป"}
-              inputClassName="border border-priamry py-3 dark:bg-white dark:text-black"
+              inputClassName="border-none py-3 focus:ring-0 font-normal bg-primary dark:bg-primary dark:placeholder:text-green-100"
             />
             <Datepicker
               useRange={false}
@@ -132,7 +132,7 @@ const Index = ({ airPort }: { airPort: any }) => {
               }}
               placeholder={"วันไป"}
               startFrom={new Date()}
-              inputClassName="border border-priamry py-3 dark:bg-white dark:text-black"
+              inputClassName="border-none py-3 focus:ring-0 font-normal bg-primary dark:bg-primary dark:placeholder:text-green-100"
             />
           </div>
           <button
