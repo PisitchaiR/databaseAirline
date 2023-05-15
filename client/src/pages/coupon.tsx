@@ -22,7 +22,7 @@ const Coupon = ({ coupon, userId }: { coupon: any; userId: string }) => {
               })
             ) : (
               <p className="w-full text-gray-400">
-                คูปองอยู่ในหน้าแรก ไปกดรับได้เลย
+                ยังไม่มีคูปองในระบบ
               </p>
             )}
           </div>
@@ -40,7 +40,7 @@ export const getServerSideProps = async (context: any) => {
   const resCoupon = await axios.get(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon`
   );
-  const coupon = resCoupon.data;
+  const coupon = resCoupon.data.filter((item: any) => item.expiredAt > Date.now());
   if (!userId) {
     return {
       redirect: {

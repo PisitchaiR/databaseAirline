@@ -22,6 +22,16 @@ export class CouponService {
     userId: string,
     couponId: string,
   ): Promise<{ message: string }> {
+    const findCoupon = await this.prisma.coupon.findUnique({
+      where: {
+        id: couponId,
+      },
+    });
+
+    if (findCoupon.expiredAt < new Date()) {
+      throw new Error('coupon expired');
+    }
+
     await this.prisma.collectCoupon.create({
       data: {
         userId: userId,

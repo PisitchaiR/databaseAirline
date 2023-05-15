@@ -97,6 +97,8 @@ const Booking = ({ coupon, userId }: Props) => {
     }
   };
 
+  //อุดร ไป หาดใหญ่ 
+
   return (
     <AppLayout title="หน้าแรก">
       <div className="w-full h-screen flex flex-col">
